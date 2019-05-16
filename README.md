@@ -2,6 +2,19 @@
 
 Dynamic Upstream with OpenResty and Redis
 
+## Integration
+
+```nginx
+location / {
+    set $dynup_project      test;
+    set $dynup_redis_host   127.0.0.1;
+    set $dynup_redis_port   6379;
+    set $dynup_upstream     '';         # must pre-define
+    access_by_lua_file ../lua/dynup.lua;
+    proxy_pass http://$dynup_upstream;
+}
+```
+
 ## Redis Keys
 
 ### Projects
@@ -17,7 +30,7 @@ Project names are stored as a set
 
 ### Backend Rules
 
-Backend rules are stored as a tab (`\t`) seperated multiline text
+Backend rules are stored as a multiline text
 
 ```plain
 > GET dynup.projects.foo.backend-rules
@@ -58,7 +71,7 @@ Backend RR cursor can be retrieved with `INCR` command
 
 ### Frontend Rules
 
-Frontend rules are stored as a tab (`\t`) seperated multiline text
+Frontend rules are stored as a multiline text
 
 Frontend rules will be evaluated by Lua script
 
@@ -73,6 +86,6 @@ header  X-User-ID,X-USERID  [1,2,3,4,5]     canary  # header matching comma sepe
 header  X-User-ID,X-USERID  <12,38>         canary  # header matching inclusive range (with leading '<' and trailing '>'), will convert to number 
 ```
 
-Other supported types are `query` and `cookie`
+Other supported types are `query`
 
 If no rule matched, will fallback to `default` group
