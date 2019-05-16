@@ -13,3 +13,6 @@
 
 # Binary output
 dynupd
+
+# Goland
+.idea/
