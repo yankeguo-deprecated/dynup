@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/go-redis/redis"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/virtcanhead/health"
@@ -9,41 +8,36 @@ import (
 )
 
 var (
-	bind       = os.Getenv("BIND")
-	addrRedis  = os.Getenv("REDIS_ADDR")
-	addrConsul = os.Getenv("CONSUL_ADDR")
+	bind      = os.Getenv("BIND")
+	redisAddr = os.Getenv("REDIS_ADDR")
+)
+
+var (
+	storage Storage
 )
 
 func init() {
-	if len(addrRedis) == 0 {
-		addrRedis = "127.0.0.1:6379"
-	}
-	if len(addrConsul) == 0 {
-		addrConsul = "127.0.0.1:8500"
+	if len(redisAddr) == 0 {
+		redisAddr = "127.0.0.1:6379"
 	}
 	if len(bind) == 0 {
-		bind = ":9080"
+		bind = ":8080"
 	}
-}
-
-type redisResource struct {
-	*redis.Client
-}
-
-func (r redisResource) HealthCheck() error {
-	return r.Client.Ping().Err()
 }
 
 func main() {
-	client := redis.NewClient(&redis.Options{Addr: addrRedis,})
+	storage = NewRedisStorage(redisAddr)
 
 	e := echo.New()
+	e.Debug = len(os.Getenv("DEBUG")) > 0
 	e.HidePort = true
 	e.HideBanner = true
-	e.Use(health.New(redisResource{client}))
+	e.Use(health.New(storage))
 	e.Static("/", "public")
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+
+	mountRoutes(e)
 
 	e.Logger.Fatal(e.Start(bind))
 }
