@@ -60,7 +60,7 @@ Backend RR cursor can be retrieved with `INCR` command
 Frontend rules will be evaluated by Lua script
 
 ```plain
-> GET dynup.projects.foo.frontend-rules
+> GET dynup.projects.foo.rules
 
 [
   {
