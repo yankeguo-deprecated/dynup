@@ -6,7 +6,7 @@
           <br>
           <h3>DynUP</h3>
           <h5>
-            <small class="text-muted">基于 OpenResty 和 Consul 的动态反代上游匹配</small>
+            <small class="text-muted">基于 OpenResty 和 Redis 的动态反代上游匹配</small>
           </h5>
           <hr>
         </b-col>
