@@ -33,7 +33,7 @@ func main() {
 	e.HidePort = true
 	e.HideBanner = true
 	e.Use(health.New(storage))
-	e.Static("/dynup", "public")
+	e.Static("/dynup", "public/dynup")
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
