@@ -59,10 +59,12 @@
                   </h5>
                   <hr>
                   <h5>前端规则：</h5>
+                  <h5 class="text-muted"><small>Redis 键值：<code>dynup.projects.{{name}}.rules</code></small></h5>
                   <p>
                     <codemirror v-model="rules" :options="cmOptions"></codemirror>
                   </p>
                   <h5>后端列表：</h5>
+                  <h5 class="text-muted"><small>Redis 键值：<code>dynup.projects.{{name}}.backends</code></small></h5>
                   <p>
                     <codemirror v-model="backends" :options="cmOptions"></codemirror>
                   </p>
