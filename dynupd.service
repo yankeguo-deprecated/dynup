@@ -1,0 +1,13 @@
+[Unit]
+Description=dynupd service
+After=network.target
+Documentation=https://github.com/yankeguo/dynup
+
+[Service]
+ExecStart=/usr/local/bin/dynupd
+Type=simple
+Restart=on-failure
+WorkingDirectory=/var/www/dynupd
+
+[Install]
+WantedBy=multi-user.target
