@@ -26,11 +26,11 @@ type Rule struct {
 }
 
 func mountRoutes(e *echo.Echo) {
-	e.GET("/api/projects", routeProjects)
-	e.GET("/api/projects/:name", routeProjectDetail)
-	e.POST("/api/projects/create", routeProjectCreate)
-	e.POST("/api/projects/:name/update", routeProjectUpdate)
-	e.POST("/api/projects/:name/destroy", routeProjectDestroy)
+	e.GET("/dynup/api/projects", routeProjects)
+	e.GET("/dynup/api/projects/:name", routeProjectDetail)
+	e.POST("/dynup/api/projects/create", routeProjectCreate)
+	e.POST("/dynup/api/projects/:name/update", routeProjectUpdate)
+	e.POST("/dynup/api/projects/:name/destroy", routeProjectDestroy)
 }
 
 func routeProjects(c echo.Context) (err error) {

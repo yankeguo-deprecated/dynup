@@ -161,7 +161,7 @@ export default {
     },
     loadProjects() {
       this.beginLoading();
-      this.$http.get("/api/projects").then(
+      this.$http.get("/dynup/api/projects").then(
         res => {
           this.endLoading();
           this.projects = res.body;
@@ -177,7 +177,7 @@ export default {
       this.rules = "";
       this.backends = "";
       this.beginLoading();
-      this.$http.get(`/api/projects/${name}`).then(
+      this.$http.get(`/dynup/api/projects/${name}`).then(
         res => {
           this.endLoading();
           this.backends = marshalJSON(res.body.backends);
@@ -191,7 +191,7 @@ export default {
     },
     createProject(name) {
       this.beginLoading();
-      this.$http.post("/api/projects/create", { name }).then(
+      this.$http.post("/dynup/api/projects/create", { name }).then(
         res => {
           this.endLoading();
           this.projects = res.body;
@@ -208,7 +208,7 @@ export default {
     destroyProject(name) {
       if (confirm('确认要删除项目 "' + name + '" 么?')) {
         this.beginLoading();
-        this.$http.post(`/api/projects/${name}/destroy`, {}).then(
+        this.$http.post(`/dynup/api/projects/${name}/destroy`, {}).then(
           res => {
             this.endLoading();
             this.projects = res.body;
@@ -230,7 +230,7 @@ export default {
         return;
       }
       this.beginLoading();
-      this.$http.post(`/api/projects/${name}/update`, { backends, rules }).then(
+      this.$http.post(`/dynup/api/projects/${name}/update`, { backends, rules }).then(
         res => {
           this.endLoading();
           this.backends = marshalJSON(res.body.backends);
