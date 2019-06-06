@@ -114,5 +114,6 @@ func (s *redisStorage) UpdateProject(p Project) (err error) {
 }
 
 func NewRedisStorage(addr string) Storage {
-	return &redisStorage{client: redis.NewClient(&redis.Options{Addr: addr})}
+	opts, _ := redis.ParseURL(addr)
+	return &redisStorage{client: redis.NewClient(opts)}
 }

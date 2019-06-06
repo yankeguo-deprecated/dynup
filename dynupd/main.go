@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	bind      = os.Getenv("BIND")
-	redisAddr = os.Getenv("REDIS_ADDR")
+	optBind     = os.Getenv("BIND")
+	optRedisURL = os.Getenv("REDIS_URL")
 )
 
 var (
@@ -17,16 +17,16 @@ var (
 )
 
 func init() {
-	if len(redisAddr) == 0 {
-		redisAddr = "127.0.0.1:6379"
+	if len(optRedisURL) == 0 {
+		optRedisURL = "redis://127.0.0.1:6379"
 	}
-	if len(bind) == 0 {
-		bind = ":8080"
+	if len(optBind) == 0 {
+		optBind = ":8080"
 	}
 }
 
 func main() {
-	storage = NewRedisStorage(redisAddr)
+	storage = NewRedisStorage(optRedisURL)
 
 	e := echo.New()
 	e.Debug = len(os.Getenv("DEBUG")) > 0
@@ -39,5 +39,5 @@ func main() {
 
 	mountRoutes(e)
 
-	e.Logger.Fatal(e.Start(bind))
+	e.Logger.Fatal(e.Start(optBind))
 }
