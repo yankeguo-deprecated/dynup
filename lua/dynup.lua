@@ -79,7 +79,7 @@ if not ok then
     return dynup_error('failed to connect redis ' .. redis_host .. ':' .. tostring(redis_port))
 end
 
-if redis_pass.len() > 0 then
+if redis_pass:len() > 0 then
     local res, err = red:auth(redis_pass)
     if not res then
         return dynup_error('redis password invalid ' .. redis_host .. ':' .. tostring(redis_port))
