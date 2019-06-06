@@ -103,6 +103,11 @@ local backend_set = false
 local rules = cjson.decode(res)
 
 for _, v in pairs(rules) do
+    if v.type == 'default' then
+        backend = v.target
+        backend_set = true
+        break
+    end
     if v.type == 'header' then
         for _, f in pairs(v.fields) do
             if dynup_match(ngx.req.get_headers()[f], v.pattern) then

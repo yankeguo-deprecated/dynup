@@ -71,7 +71,14 @@ Frontend rules will be evaluated by Lua script
 
 Other supported types are `header`
 
-If no rule matched, will fallback to `default` group
+If no rule matched, will fallback to `default` group，you can add a `default` rule like this
+
+```plain
+{
+  "type": "default",
+  "target": "canary"
+}
+```
 
 ## License
 
