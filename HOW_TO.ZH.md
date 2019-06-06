@@ -7,6 +7,7 @@ location / {
     set $dynup_project      test;       # 项目名，以 test 为例
     set $dynup_redis_host   127.0.0.1;  # Redis IP
     set $dynup_redis_port   6379;       # Redis 端口
+    set $dynup_redis_pass   '';         # Redis 密码，没有则必须留空字符串
     set $dynup_upstream     '';         # 必须预先定义空值，才能在脚本中写入该值
     access_by_lua_file /path/to/lua/dynup.lua;  # 执行脚本，写入 $dynup_stream
     proxy_pass http://$dynup_upstream;  # 使用 $dynup_upstream

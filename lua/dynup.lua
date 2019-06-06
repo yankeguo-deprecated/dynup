@@ -48,6 +48,7 @@ end
 local project = ngx.var.dynup_project
 local redis_host = ngx.var.dynup_redis_host
 local redis_port = ngx.var.dynup_redis_port
+local redis_pass = ngx.var.dynup_redis_pass
 
 -- check variables
 if not project then
@@ -76,6 +77,13 @@ red:set_timeout(3000)
 local ok, err = red:connect(redis_host, redis_port)
 if not ok then
     return dynup_error('failed to connect redis ' .. redis_host .. ':' .. tostring(redis_port))
+end
+
+if redis_pass.len() > 0 then
+    local res, err = red:auth(redis_pass)
+    if not res then
+        return dynup_error('redis password invalid ' .. redis_host .. ':' .. tostring(redis_port))
+    end
 end
 
 -- fetch frontend rules

@@ -9,6 +9,7 @@ location / {
     set $dynup_project      test;
     set $dynup_redis_host   127.0.0.1;
     set $dynup_redis_port   6379;
+    set $dynup_redis_pass   '';         # must exist, empty for null
     set $dynup_upstream     '';         # must pre-define
     access_by_lua_file ../lua/dynup.lua;
     proxy_pass http://$dynup_upstream;
