@@ -31,7 +31,7 @@ Project names are stored as a set
 ### Backends
 
 ```plain
-> GET dynup.projects.foo.backends
+> GET gateway-backends-foo
 
 {
   "canary": [
@@ -45,22 +45,12 @@ Project names are stored as a set
 
 Backend group `default` MUST exist
 
-### Backend RR Cursor
-
-Backend RR cursor can be retrieved with `INCR` command
-
-```plain
-> INCR dynup.projects.foo.backends.default.rr-cur
-
-80
-```
-
 ### Rules
 
 Frontend rules will be evaluated by Lua script
 
 ```plain
-> GET dynup.projects.foo.rules
+> GET gateway-rules-foo
 
 [
   {

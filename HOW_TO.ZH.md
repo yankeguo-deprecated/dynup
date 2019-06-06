@@ -17,7 +17,7 @@ location / {
 
 ### 后端服务器记录
 
-将后端服务器记录写入 `dynup.projects.test.backends` 键值
+将后端服务器记录写入 `gateway-backends-test` 键值
 
 Dynup 使用分组概念，后端服务器被分为多个组。其中 `default` 组为默认组，必须存在。
 
@@ -36,7 +36,7 @@ Dynup 使用分组概念，后端服务器被分为多个组。其中 `default` 
 
 ### 前端路由规则
 
-将前端路由规则写入 `dynup.projects.test.rules` 键值
+将前端路由规则写入 `gateway-rules-test` 键值
 
 ```plain
 > SET dynup.projects.foo.rules

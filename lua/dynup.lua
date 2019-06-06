@@ -54,8 +54,8 @@ if not project then
     return dynup_error('$dynup_project not set in nginx.conf')
 end
 
-local dynup_key_rules = 'dynup.projects.' .. project .. '.rules'
-local dynup_key_backends = 'dynup.projects.' .. project .. '.backends'
+local dynup_key_rules = 'gateway-rules-' .. project
+local dynup_key_backends = 'gateway-backends-' .. project
 
 if not redis_host then
     dynup_warn("$dynup_redis_host not set, default to '127.0.0.1'")
@@ -120,7 +120,7 @@ for _, v in pairs(rules) do
 end
 
 -- backend rr
-local dynup_key_backend_rr = 'dynup.projects.' .. project .. '.backends.' .. backend .. '.rr-cur'
+local dynup_key_backend_rr = 'gateway-rr-' .. project .. '-backends-' .. backend
 
 -- fetch backends
 res, err = red:get(dynup_key_backends)

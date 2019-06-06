@@ -74,13 +74,13 @@ func (s *redisStorage) GetProjectNames() (names []string, err error) {
 
 func (s *redisStorage) GetProject(name string) (p Project, err error) {
 	p.Name = name
-	if err = s.getJSON("dynup.projects."+name+".rules", &p.Rules); err != nil {
+	if err = s.getJSON("gateway-rules-"+name, &p.Rules); err != nil {
 		return
 	}
 	if p.Rules == nil {
 		p.Rules = make([]Rule, 0, 0)
 	}
-	if err = s.getJSON("dynup.projects."+name+".backends", &p.Backends); err != nil {
+	if err = s.getJSON("gateway-backends-"+name, &p.Backends); err != nil {
 		return
 	}
 	if p.Backends == nil {
@@ -104,10 +104,10 @@ func (s *redisStorage) DestroyProject(name string) (err error) {
 }
 
 func (s *redisStorage) UpdateProject(p Project) (err error) {
-	if err = s.setJSON("dynup.projects."+p.Name+".rules", p.Rules); err != nil {
+	if err = s.setJSON("gateway-rules-"+p.Name, p.Rules); err != nil {
 		return
 	}
-	if err = s.setJSON("dynup.projects."+p.Name+".backends", p.Backends); err != nil {
+	if err = s.setJSON("gateway-backends-"+p.Name, p.Backends); err != nil {
 		return
 	}
 	return
