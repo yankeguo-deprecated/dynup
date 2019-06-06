@@ -82,6 +82,7 @@ end
 if redis_pass:len() > 0 then
     local res, err = red:auth(redis_pass)
     if not res then
+        red:close()
         return dynup_error('redis password invalid ' .. redis_host .. ':' .. tostring(redis_port))
     end
 end
@@ -89,9 +90,11 @@ end
 -- fetch frontend rules
 local res, err = red:get(dynup_key_rules)
 if not res or err then
+    red:close()
     return dynup_error('failed to fetch rules for project: ' .. project)
 end
 if res == ngx.null then
+    red:close()
     return dynup_error('rules not set for project: ' .. project)
 end
 
@@ -138,9 +141,11 @@ local dynup_key_backend_rr = 'gateway-rr-' .. project .. '-backends-' .. backend
 -- fetch backends
 res, err = red:get(dynup_key_backends)
 if not res or err then
+    red:close()
     return dynup_error('failed to fetch backends for project: ' .. project)
 end
 if res == ngx.null then
+    red:close()
     return dynup_error('backends not set for project: ' .. project)
 end
 
@@ -148,15 +153,18 @@ end
 local targets = cjson.decode(res)[backend]
 
 if not targets then
+    red:close()
     return dynup_error('backend: ' .. backend .. ' not set for project: ' .. project)
 end
 
 -- rotate the rr
 local cursor, err = red:incr(dynup_key_backend_rr)
 if not cursor or err then
+    red:close()
     return dynup_error('failed to fetch cursor for backend: ' .. backend .. ' for project: ' .. project)
 end
 if cursor == ngx.null then
+    red:close()
     return dynup_error('cursor for backend: ' .. backend .. ' not set for project:' .. project)
 end
 
@@ -168,3 +176,5 @@ end
 
 -- set the $dynup_upstream variable
 ngx.var.dynup_upstream = targets[1 + cursor % table.maxn(targets)]
+
+red:close()
