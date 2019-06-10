@@ -23,7 +23,7 @@ location / {
 Dynup 使用分组概念，后端服务器被分为多个组。其中 `default` 组为默认组，必须存在。
 
 ```
-> SET dynup.projects.test.backends
+> SET gateway-backends-test
 
 {
   "canary": [
@@ -40,7 +40,7 @@ Dynup 使用分组概念，后端服务器被分为多个组。其中 `default` 
 将前端路由规则写入 `gateway-rules-test` 键值
 
 ```plain
-> SET dynup.projects.foo.rules
+> SET gateway-rules-test
 
 [
   {
